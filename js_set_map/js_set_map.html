@@ -1,0 +1,37 @@
+<html lang="en">
+  <head>
+    <script type="module">
+      console.log('coucou')
+      const persons = [
+        {
+          name: 'John Doe', age: 18, id: 1
+        },
+        {
+          name: 'Jane Doe', age: 28, id: 2
+        },
+        {
+          name: 'Henry Doe', age: 32, id: 1
+        }
+      ]
+
+      class UniqueSet {
+
+        map = new Map();
+
+        constructor(fn, items) {
+          for(const item of items) {
+            this.map.set(fn(item), item);
+          }
+        }
+
+        values() {
+          return this.map.values();
+        }
+      }
+
+      const p = new UniqueSet((p) => p.id, persons);
+
+      console.log(Array.from(p.values()))
+    </script>
+  </head>
+</html>
