@@ -5,7 +5,9 @@ Analyse le contenu de cet email et suggère un 'label' le plus pertinent parmi l
 *SOCIAL* Analyse ce mail et identifie les éléments qui indiquent qu'il s'agit d'un message de divertissement, tels que des contenus humoristiques, des recommandations de loisirs, des jeux ou des liens vers des vidéos et événements amusants.
 *DIVERTISEMENT* Analyse ce mail et identifie les éléments qui indiquent qu'il s'agit d'un message de divertissement, tels que des contenus humoristiques, des recommandations de loisirs, des jeux ou des liens vers des vidéos et événements amusants.
 *PUB* Identifie les éléments caractéristiques d'un mail publicitaire, tels que l'utilisation de promotions, d'appels à l'action, un ton commercial et un expéditeur d'entreprise, pour déterminer s'il s'agit d'un message promotionnel.
+*ADMIN* todo
 *SPAM* Analyse les éléments suspects d'un mail, tels que des fautes d'orthographe, des demandes urgentes de renseignements personnels, des liens ou pièces jointes inhabituels, et une adresse d'expéditeur douteuse, pour identifier s'il s'agit de spam, de phishing ou d'une escroquerie.
+*FINANCE* Identifiez les emails contenant des mots-clés tels que "facture", "preuve d'achat", "reçu", "confirmation de commande", "confirmation de paiement", ou "numéro de transaction" pour déterminer s'ils concernent des achats ou des transactions financières.
 *Autre* Si le mail ne correspond à aucun autre label
 ---
 Contenu de l'email : {{11.text}}
