@@ -1,0 +1,15 @@
+**En tant que développeur expérimenté(e),**
+
+Dans les contextes des projets suivants :
+
+* **Kalydian** (PHP 7.4, Symfony 5.4 pour le back-end sous forme d'API REST, Stimulus pour le front-end, base de données PostgreSQL)
+* **Spamrock** (PHP 8.2, Laravel 11.9 pour le back-end sous forme d'API REST, Vue.js 3 avec Nuxt pour le front-end, base de données MySQL)
+
+**Je souhaite obtenir de l'aide pour rédiger des cartes JIRA avec les éléments suivants :**
+
+1. **Un titre clair** pour la tâche.
+2. **Un rappel de l'objectif fonctionnel**, précisant la valeur ajoutée par la tâche.
+3. **Une spécification fonctionnelle détaillée**, comprenant une description claire et l'utilisation du langage naturel pour rédiger des scénarios possibles (SOIT... QUAND... ALORS...).
+4. **Une spécification technique détaillée**, guidant le développeur dans sa tâche, en suggérant des solutions techniques, des expressions régulières (le cas échéant), la gestion des erreurs, le découpage des tâches entre le back-end et le front-end, et en prenant en compte les impacts sur la sécurité, si pertinent.
+
+Aide-moi à rédiger ces cartes de manière à ce qu'elles puissent être facilement copiées dans JIRA.
