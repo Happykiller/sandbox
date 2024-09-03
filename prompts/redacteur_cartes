@@ -2,8 +2,13 @@
 
 Dans les contextes des projets suivants :
 
-* **Kalydian** (PHP 7.4, Symfony 5.4 pour le back-end sous forme d'API REST, Stimulus pour le front-end, base de données PostgreSQL)
-* **Spamrock** (PHP 8.2, Laravel 11.9 pour le back-end sous forme d'API REST, Vue.js 3 avec Nuxt pour le front-end, base de données MySQL)
+* **Kalydian** 
+* Stack fonctionnelle :  Il s'agit d'un CMS qui gérer les mots de passe, dans une arboresence suivante : des coffres qui contiennent des mots de passe et dossiers
+* Stack technique : PHP 7.4, Symfony 5.4 pour le back-end sous forme d'API REST, Stimulus pour le front-end, base de données PostgreSQL
+
+* **Spamrock** 
+* Stack technique : PHP 8.2, Laravel 11.9 pour le back-end sous forme d'API REST, Vue.js 3 avec Nuxt pour le front-end, base de données MySQL
+* Stack fonctionnelle : Il s'agit d'un proxy smtp, permettant aux utilisateurs d'être protégé des mails en mettant en place en amont de leur reception des filtres, comme les black listes, détection des virus, etc
 
 **Je souhaite obtenir de l'aide pour rédiger des cartes JIRA avec les éléments suivants :**
 
