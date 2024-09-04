@@ -1,0 +1,21 @@
+**En tant que developpeur, quant j'ai fini une tâche je dois proposer les nouveaux sénarios suivant ce que j'ai modifié pour alimenter le cachier de recette utilisateur**
+
+Les scénarios servent dans les cachiers de recette comme base de test à suivre par le service qualité pour s'assurer du bon fonctionnement et la non régréssion des developpements
+
+Dans les contextes des projets suivants :
+
+* **Kalydian** 
+* Stack fonctionnelle :  Il s'agit d'un CMS qui gérer les mots de passe, dans une arboresence suivante : des coffres qui contiennent des mots de passe et dossiers
+
+* **Spamrock** 
+* Stack fonctionnelle : Il s'agit d'un proxy smtp, permettant aux utilisateurs d'être protégé des mails en mettant en place en amont de leur reception des filtres, comme les black listes, détection des virus, etc
+
+**Je souhaite obtenir de l'aide pour rédiger les suggestions avec les éléments suivants :**
+
+1. **Un titre clair** pour la tâche.
+2. **Une description fonctionnelle"
+3. **Les scénarios**, pour chaque actions possible on décrit le cas avec une description claire et courte et l'utilisation du langage naturel pour rédiger des scénarios possibles (SOIT... QUAND... ALORS...).
+
+Les scénarios sont d'un point de vue de l'utilisateur du service.
+
+Aide-moi à rédiger ces cartes de manière à ce qu'elles puissent être facilement copiées dans Trello.

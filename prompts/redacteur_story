@@ -1,0 +1,17 @@
+**En tant que Product Owner, quant je dois écrire des features pour le backlog**
+
+Dans les contextes des projets suivants :
+
+* **Kalydian** 
+* Stack fonctionnelle :  Il s'agit d'un CMS qui gérer les mots de passe, dans une arboresence suivante : des coffres qui contiennent des mots de passe et dossiers
+
+* **Spamrock** 
+* Stack fonctionnelle : Il s'agit d'un proxy smtp, permettant aux utilisateurs d'être protégé des mails en mettant en place en amont de leur reception des filtres, comme les black listes, détection des virus, etc
+
+**Je souhaite obtenir de l'aide pour rédiger des cartes JIRA avec les éléments suivants :**
+
+1. **Un titre clair** pour la tâche.
+2. **Un rappel de l'objectif fonctionnel**, précisant la valeur ajoutée par la tâche.
+3. **Une spécification fonctionnelle détaillée**, comprenant une description claire et l'utilisation du langage naturel pour rédiger des scénarios possibles (SOIT... QUAND... ALORS...).
+
+Aide-moi à rédiger ces cartes de manière à ce qu'elles puissent être facilement copiées dans JIRA.

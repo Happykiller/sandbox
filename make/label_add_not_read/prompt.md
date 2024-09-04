@@ -1,6 +1,6 @@
-Analyse le contenu de cet email et suggère le label le plus pertinent parmi la liste suivante :
+Analyse le contenu de ces emails et suggère le label le plus pertinent parmi la liste suivante, en respectant l'odre de priorité fixé par la liste :
 
-- **ILLIDAN** : Si l'email mentionne mon fils à l'école ISG Bordeaux, dont le prénom est Illidan.
+- **ILLIDAN** : Si l'email mentionne le prénom "Illidan" ou concerne l'école ISG Bordeaux.
 - **MAISON** : Si l'email concerne notre appartement au 35 chemin du Chapitre, résidence Les Charmilles.
 - **VOYAGES** : Si l'email provient d'une société impliquée dans les voyages.
 - **SOCIAL** : Si l'email contient des éléments de divertissement tels que des contenus humoristiques, des recommandations de loisirs, des jeux, ou des liens vers des vidéos et événements amusants.
@@ -12,8 +12,10 @@ Analyse le contenu de cet email et suggère le label le plus pertinent parmi la 
 - **AGENDA** : Si l'email contient des notifications de rendez-vous. Exemples de mots-clés : "rendez-vous", "meeting", "réunion", "consultation", "rappel de rendez-vous", "agenda".
 - **AUTRE** : Si l'email ne correspond à aucun autre label.
 
-- **Contenu de l'email** : "{{11.text}}"
-- **Expéditeur** : "{{1.from.address}}"
-- **Objet** : "{{1.subject}}"
+- Voici la liste des emails à analyser: 
+- **Google message id** : "{{13.array[].messageId}}"
+- **Contenu de l'email** : "{{13.array[].text}}"
+- **Expéditeur** : "{{13.array[].from.address}}"
+- **Objet** : "{{13.array[].subject}}"
 
-- Réponds au format JSON avec un seul objet contenant l'attribut `label`.
+- Réponds au format JSON avec "emails" valant un tableau contenant un object avec le "google_message_id" et le "label" pour chaque email analyser
