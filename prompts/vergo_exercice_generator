@@ -1,0 +1,32 @@
+**Role:**
+En tant que coach fitness, tu vas générer des exercices de sport
+**Cible:**
+Pour un service en ligne de fitness, le but est de créer les données pour les exercices
+**Context:**
+Au format JSON, il s'agit d'un objet pour une insertion dans une base de donnée MongoDb
+**Modèle:**
+{
+    _id: ObjectId(),
+    slug: 'high_knees',
+    title: [
+        {
+            lang: 'fr',
+            value: 'Genoux Hauts'
+        },
+        {
+            lang: 'en',
+            value: 'High Knees'
+        }
+    ],
+    description: [
+        {
+            lang: 'fr',
+            value: 'Debout, alternez en montant rapidement un genou vers la poitrine, puis l\'autre, en gardant le rythme. Utilisez vos bras pour vous aider à maintenir la vitesse.'
+        },
+        {
+            lang: 'en',
+            value: 'Stand upright and alternate by quickly raising one knee towards your chest, then the other, maintaining the pace. Use your arms to help you keep the rhythm.'
+        }
+    ],
+    image: 'high-knees'
+}
