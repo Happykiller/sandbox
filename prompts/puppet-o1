@@ -1,0 +1,806 @@
+Salut !
+
+Context: Nous allons faire du developpement en tant qu'expert python pour le developpement d'un AI.
+
+Le but: Le but de cette AI est de faire un service qui grâce à des API permettra de créer des modèles, de les entrainer puis de lancer des recherches.
+
+Consignes: Fait une anlyse aprofondi des logiques et méthodes avant de répondre. Merci de respecter le code existant, c'est à dire à ne pas retirer des élements utilient présent si ce n'est pas nécéssaire aux corrections et amélioration, de ne pas retirer les commentaires, j'aime garder un haut niveau de commentaire dans le code, le projet à vocation a être pédagogique, le but est aussi de réaliser une AI à partir de rien.
+
+Cas pratique: Nous allons travailler sur puppet-o1, c'est un modèle qui a pour but de prédire le prix d'un appartement le plus projet de réalitée.
+
+Problèmatique: Les résultats des prédictions ne sont pas bons actuellement il faut qu'on améliore cela
+
+Le projet : Je vais te partager les données d'entrainement ainsi que ceux de test, ainsi que les résultats, puis les usecases qui traitent les données et le machine learning
+
+*doc\puppet-o1.http*
+###
+POST {{host}}/create_model
+Content-Type: application/json
+
+{
+  "name": "puppet-o1",
+  "neural_network_type": "SimpleNN"
+}
+
+###
+POST {{host}}/train_model
+Content-Type: application/json
+
+{
+  "name": "puppet-o1",
+  "neural_network_type": "SimpleNN",
+  "training_data": [
+    {
+        "type":4,
+        "surface":98,
+        "pieces":4,
+        "floor":5,
+        "parking":1,
+        "balcon":0,
+        "ascenseur":1,
+        "orientation":6,
+        "transports":1,
+        "neighborhood":1,
+        "price":215000
+    },
+    {
+        "type":4,
+        "surface":68,
+        "pieces":4,
+        "floor":5,
+        "parking":1,
+        "balcon":1,
+        "ascenseur":1,
+        "orientation":0,
+        "transports":1,
+        "neighborhood":2,
+        "price":130000
+    },
+    {
+        "type":3,
+        "surface":58,
+        "pieces":3,
+        "floor":0,
+        "parking":0,
+        "balcon":0,
+        "ascenseur":1,
+        "orientation":0,
+        "transports":1,
+        "neighborhood":4,
+        "price":150000
+    },
+    {
+        "type":7,
+        "surface":18,
+        "pieces":1,
+        "floor":0,
+        "parking":0,
+        "balcon":0,
+        "ascenseur":0,
+        "orientation":0,
+        "transports":1,
+        "neighborhood":5,
+        "price":65000
+    },
+    {
+        "type":5,
+        "surface":127,
+        "pieces":5,
+        "floor":15,
+        "parking":0,
+        "balcon":1,
+        "ascenseur":0,
+        "orientation":0,
+        "transports":1,
+        "neighborhood":3,
+        "price":270000
+    },
+    {
+        "type":2,
+        "surface":48,
+        "pieces":2,
+        "floor":2,
+        "parking":0,
+        "balcon":0,
+        "ascenseur":0,
+        "orientation":0,
+        "transports":1,
+        "neighborhood":4,
+        "price":159000
+    },
+    {
+        "type":1,
+        "surface":34,
+        "pieces":1,
+        "floor":0,
+        "parking":0,
+        "balcon":0,
+        "ascenseur":0,
+        "orientation":0,
+        "transports":1,
+        "neighborhood":4,
+        "price":100000
+    },
+    {
+        "type":4,
+        "surface":56,
+        "pieces":4,
+        "floor":0,
+        "parking":0,
+        "balcon":0,
+        "ascenseur":0,
+        "orientation":0,
+        "transports":1,
+        "neighborhood":4,
+        "price":160000
+    },
+    {
+        "type":2,
+        "surface":48,
+        "pieces":2,
+        "floor":0,
+        "parking":0,
+        "balcon":1,
+        "ascenseur":1,
+        "orientation":5,
+        "transports":1,
+        "neighborhood":2,
+        "price":160000
+    },
+    {
+        "type":3,
+        "surface":70,
+        "pieces":3,
+        "floor":2,
+        "parking":0,
+        "balcon":0,
+        "ascenseur":0,
+        "orientation":3,
+        "transports":1,
+        "neighborhood":1,
+        "price":220000
+    }
+  ]
+}
+
+###
+POST {{host}}/search
+Content-Type: application/json
+
+{
+    "name": "puppet-o1",
+    "neural_network_type": "SimpleNN",
+    "vector": {
+        "type":3,
+        "surface":70,
+        "pieces":3,
+        "floor":2,
+        "parking":0,
+        "balcon":0,
+        "ascenseur":0,
+        "orientation":3,
+        "transports":1,
+        "neighborhood":1
+    }
+}
+
+
+###
+POST {{host}}/test
+Content-Type: application/json
+
+{
+  "name": "puppet-o1",
+  "neural_network_type": "SimpleNN",
+  "test_data": [
+    {
+        "type":4,
+        "surface":98,
+        "pieces":4,
+        "floor":5,
+        "parking":1,
+        "balcon":0,
+        "ascenseur":1,
+        "orientation":6,
+        "transports":1,
+        "neighborhood":1,
+        "price":215000
+    },
+    {
+        "type":4,
+        "surface":68,
+        "pieces":4,
+        "floor":5,
+        "parking":1,
+        "balcon":1,
+        "ascenseur":1,
+        "orientation":0,
+        "transports":1,
+        "neighborhood":2,
+        "price":130000
+    },
+    {
+        "type":3,
+        "surface":58,
+        "pieces":3,
+        "floor":0,
+        "parking":0,
+        "balcon":0,
+        "ascenseur":1,
+        "orientation":0,
+        "transports":1,
+        "neighborhood":4,
+        "price":150000
+    },
+    {
+        "type":7,
+        "surface":18,
+        "pieces":1,
+        "floor":0,
+        "parking":0,
+        "balcon":0,
+        "ascenseur":0,
+        "orientation":0,
+        "transports":1,
+        "neighborhood":5,
+        "price":65000
+    },
+    {
+        "type":5,
+        "surface":127,
+        "pieces":5,
+        "floor":15,
+        "parking":0,
+        "balcon":1,
+        "ascenseur":0,
+        "orientation":0,
+        "transports":1,
+        "neighborhood":3,
+        "price":270000
+    },
+    {
+        "type":2,
+        "surface":48,
+        "pieces":2,
+        "floor":2,
+        "parking":0,
+        "balcon":0,
+        "ascenseur":0,
+        "orientation":0,
+        "transports":1,
+        "neighborhood":4,
+        "price":159000
+    },
+    {
+        "type":1,
+        "surface":34,
+        "pieces":1,
+        "floor":0,
+        "parking":0,
+        "balcon":0,
+        "ascenseur":0,
+        "orientation":0,
+        "transports":1,
+        "neighborhood":4,
+        "price":100000
+    },
+    {
+        "type":4,
+        "surface":56,
+        "pieces":4,
+        "floor":0,
+        "parking":0,
+        "balcon":0,
+        "ascenseur":0,
+        "orientation":0,
+        "transports":1,
+        "neighborhood":4,
+        "price":160000
+    },
+    {
+        "type":2,
+        "surface":48,
+        "pieces":2,
+        "floor":0,
+        "parking":0,
+        "balcon":1,
+        "ascenseur":1,
+        "orientation":5,
+        "transports":1,
+        "neighborhood":2,
+        "price":160000
+    },
+    {
+        "type":3,
+        "surface":70,
+        "pieces":3,
+        "floor":2,
+        "parking":0,
+        "balcon":0,
+        "ascenseur":0,
+        "orientation":3,
+        "transports":1,
+        "neighborhood":1,
+        "price":220000
+    }
+  ]
+}
+
+*résultats*
+[2024-10-19 11:56:41,559][create_model_simpleNN][INFO]Type de machine learning utilisé pour la création du model SimpleNN
+INFO:     127.0.0.1:32830 - "POST /create_model HTTP/1.1" 200 OK
+[2024-10-19 11:56:46,164][train_model_simple_nn][INFO]Type de machine learning utilisé pour l'entrainement SimpleNN
+[2024-10-19 11:56:46,732][train_model_nn][DEBUG]train_data [([4, 98, 4, 5, 1, 0, 1, 6, 1, 1], 215000.0), ([4, 68, 4, 5, 1, 1, 1, 0, 1, 2], 130000.0), ([3, 58, 3, 0, 0, 0, 1, 0, 1, 4], 150000.0), ([7, 18, 1, 0, 0, 0, 0, 0, 1, 5], 65000.0), ([5, 127, 5, 15, 0, 1, 0, 0, 1, 3], 270000.0), ([2, 48, 2, 2, 0, 0, 0, 0, 1, 4], 159000.0), ([1, 34, 1, 0, 0, 0, 0, 0, 1, 4], 100000.0), ([4, 56, 4, 0, 0, 0, 0, 0, 1, 4], 160000.0), ([2, 48, 2, 0, 0, 1, 1, 5, 1, 2], 160000.0), ([3, 70, 3, 2, 0, 0, 0, 3, 1, 1], 220000.0)]
+[2024-10-19 11:56:46,888][train_model_nn][DEBUG]Époque 10/3000, Perte: 14881453056.0
+[2024-10-19 11:56:46,898][train_model_nn][DEBUG]Époque 20/3000, Perte: 14881303552.0
+[2024-10-19 11:56:46,905][train_model_nn][DEBUG]Époque 30/3000, Perte: 14880972800.0
+[2024-10-19 11:56:46,912][train_model_nn][DEBUG]Époque 40/3000, Perte: 14880487424.0
+[2024-10-19 11:56:46,920][train_model_nn][DEBUG]Époque 50/3000, Perte: 14879558656.0
+[2024-10-19 11:56:46,928][train_model_nn][DEBUG]Époque 60/3000, Perte: 14877818880.0
+[2024-10-19 11:56:46,935][train_model_nn][DEBUG]Époque 70/3000, Perte: 14875768832.0
+[2024-10-19 11:56:46,943][train_model_nn][DEBUG]Époque 80/3000, Perte: 14872975360.0
+[2024-10-19 11:56:46,950][train_model_nn][DEBUG]Époque 90/3000, Perte: 14868463616.0
+[2024-10-19 11:56:46,956][train_model_nn][DEBUG]Époque 100/3000, Perte: 14861674496.0
+[2024-10-19 11:56:46,964][train_model_nn][DEBUG]Époque 110/3000, Perte: 14855123968.0
+[2024-10-19 11:56:46,971][train_model_nn][DEBUG]Époque 120/3000, Perte: 14844819456.0
+[2024-10-19 11:56:46,978][train_model_nn][DEBUG]Époque 130/3000, Perte: 14831081472.0
+[2024-10-19 11:56:46,985][train_model_nn][DEBUG]Époque 140/3000, Perte: 14812498944.0
+[2024-10-19 11:56:46,992][train_model_nn][DEBUG]Époque 150/3000, Perte: 14796257280.0
+[2024-10-19 11:56:46,999][train_model_nn][DEBUG]Époque 160/3000, Perte: 14774450176.0
+[2024-10-19 11:56:47,006][train_model_nn][DEBUG]Époque 170/3000, Perte: 14739486720.0
+[2024-10-19 11:56:47,013][train_model_nn][DEBUG]Époque 180/3000, Perte: 14715027456.0
+[2024-10-19 11:56:47,020][train_model_nn][DEBUG]Époque 190/3000, Perte: 14683824128.0
+[2024-10-19 11:56:47,026][train_model_nn][DEBUG]Époque 200/3000, Perte: 14632869888.0
+[2024-10-19 11:56:47,032][train_model_nn][DEBUG]Époque 210/3000, Perte: 14589572096.0
+[2024-10-19 11:56:47,038][train_model_nn][DEBUG]Époque 220/3000, Perte: 14544287744.0
+[2024-10-19 11:56:47,045][train_model_nn][DEBUG]Époque 230/3000, Perte: 14508641280.0
+[2024-10-19 11:56:47,052][train_model_nn][DEBUG]Époque 240/3000, Perte: 14428012544.0
+[2024-10-19 11:56:47,060][train_model_nn][DEBUG]Époque 250/3000, Perte: 14369949696.0
+[2024-10-19 11:56:47,067][train_model_nn][DEBUG]Époque 260/3000, Perte: 14277192704.0
+[2024-10-19 11:56:47,074][train_model_nn][DEBUG]Époque 270/3000, Perte: 14175983616.0
+[2024-10-19 11:56:47,081][train_model_nn][DEBUG]Époque 280/3000, Perte: 14104829952.0
+[2024-10-19 11:56:47,088][train_model_nn][DEBUG]Époque 290/3000, Perte: 14025916416.0
+[2024-10-19 11:56:47,093][train_model_nn][DEBUG]Époque 300/3000, Perte: 13910576128.0
+[2024-10-19 11:56:47,100][train_model_nn][DEBUG]Époque 310/3000, Perte: 13853769728.0
+[2024-10-19 11:56:47,106][train_model_nn][DEBUG]Époque 320/3000, Perte: 13719640064.0
+[2024-10-19 11:56:47,112][train_model_nn][DEBUG]Époque 330/3000, Perte: 13538449408.0
+[2024-10-19 11:56:47,120][train_model_nn][DEBUG]Époque 340/3000, Perte: 13458226176.0
+[2024-10-19 11:56:47,127][train_model_nn][DEBUG]Époque 350/3000, Perte: 13263337472.0
+[2024-10-19 11:56:47,135][train_model_nn][DEBUG]Époque 360/3000, Perte: 13094926336.0
+[2024-10-19 11:56:47,142][train_model_nn][DEBUG]Époque 370/3000, Perte: 12977045504.0
+[2024-10-19 11:56:47,148][train_model_nn][DEBUG]Époque 380/3000, Perte: 12841072640.0
+[2024-10-19 11:56:47,154][train_model_nn][DEBUG]Époque 390/3000, Perte: 12690784256.0
+[2024-10-19 11:56:47,159][train_model_nn][DEBUG]Époque 400/3000, Perte: 12548781056.0
+[2024-10-19 11:56:47,165][train_model_nn][DEBUG]Époque 410/3000, Perte: 12260018176.0
+[2024-10-19 11:56:47,171][train_model_nn][DEBUG]Époque 420/3000, Perte: 12052409344.0
+[2024-10-19 11:56:47,177][train_model_nn][DEBUG]Époque 430/3000, Perte: 12195553280.0
+[2024-10-19 11:56:47,183][train_model_nn][DEBUG]Époque 440/3000, Perte: 11622877184.0
+[2024-10-19 11:56:47,189][train_model_nn][DEBUG]Époque 450/3000, Perte: 11461654528.0
+[2024-10-19 11:56:47,196][train_model_nn][DEBUG]Époque 460/3000, Perte: 11398227968.0
+[2024-10-19 11:56:47,203][train_model_nn][DEBUG]Époque 470/3000, Perte: 11186658304.0
+[2024-10-19 11:56:47,211][train_model_nn][DEBUG]Époque 480/3000, Perte: 10894601216.0
+[2024-10-19 11:56:47,218][train_model_nn][DEBUG]Époque 490/3000, Perte: 10634130432.0
+[2024-10-19 11:56:47,226][train_model_nn][DEBUG]Époque 500/3000, Perte: 10531423232.0
+[2024-10-19 11:56:47,233][train_model_nn][DEBUG]Époque 510/3000, Perte: 10404541440.0
+[2024-10-19 11:56:47,240][train_model_nn][DEBUG]Époque 520/3000, Perte: 9932318720.0
+[2024-10-19 11:56:47,241][train_model_nn][INFO]Arrêt anticipé à l'époque 521. Perte optimale atteinte : 9840777216.000000
+[2024-10-19 11:56:47,241][train_model_nn][INFO]Temps total d'entraînement: 0.51 secondes
+[2024-10-19 11:56:47,241][train_model_nn][INFO]Nombre total de paramètres: 18049
+[2024-10-19 11:56:47,241][train_model_nn][INFO]Perte moyenne: 13594432739.992323
+[2024-10-19 11:56:47,241][train_model_nn][INFO]Perte minimale: 9840777216.0
+[2024-10-19 11:56:47,241][train_model_nn][INFO]Perte maximale: 14881557504.0
+[2024-10-19 11:56:47,241][train_model_nn][INFO]Perte finale après 521 epochs : 9973336064.0
+INFO:     127.0.0.1:32834 - "POST /train_model HTTP/1.1" 200 OK
+[2024-10-19 11:56:48,717][mesure_simple_nn][INFO]Requête: [4, 98, 4, 5, 1, 0, 1, 6, 1, 1]
+[2024-10-19 11:56:48,717][mesure_simple_nn][INFO]Similarité attendue: 215000.0€, Similarité donnée par le modèle: 8791.48828125€, Erreur: 206208.51171875€
+[2024-10-19 11:56:48,718][mesure_simple_nn][INFO]Requête: [4, 68, 4, 5, 1, 1, 1, 0, 1, 2]
+[2024-10-19 11:56:48,718][mesure_simple_nn][INFO]Similarité attendue: 130000.0€, Similarité donnée par le modèle: 8776.412109375€, Erreur: 121223.587890625€
+[2024-10-19 11:56:48,718][mesure_simple_nn][INFO]Requête: [3, 58, 3, 0, 0, 0, 1, 0, 1, 4]
+[2024-10-19 11:56:48,718][mesure_simple_nn][INFO]Similarité attendue: 150000.0€, Similarité donnée par le modèle: 7708.5947265625€, Erreur: 142291.4052734375€
+[2024-10-19 11:56:48,718][mesure_simple_nn][INFO]Requête: [7, 18, 1, 0, 0, 0, 0, 0, 1, 5]
+[2024-10-19 11:56:48,718][mesure_simple_nn][INFO]Similarité attendue: 65000.0€, Similarité donnée par le modèle: 8888.02734375€, Erreur: 56111.97265625€
+[2024-10-19 11:56:48,718][mesure_simple_nn][INFO]Requête: [5, 127, 5, 15, 0, 1, 0, 0, 1, 3]
+[2024-10-19 11:56:48,718][mesure_simple_nn][INFO]Similarité attendue: 270000.0€, Similarité donnée par le modèle: 8592.0859375€, Erreur: 261407.9140625€
+[2024-10-19 11:56:48,719][mesure_simple_nn][INFO]Requête: [2, 48, 2, 2, 0, 0, 0, 0, 1, 4]
+[2024-10-19 11:56:48,719][mesure_simple_nn][INFO]Similarité attendue: 159000.0€, Similarité donnée par le modèle: 8205.1435546875€, Erreur: 150794.8564453125€
+[2024-10-19 11:56:48,719][mesure_simple_nn][INFO]Requête: [1, 34, 1, 0, 0, 0, 0, 0, 1, 4]
+[2024-10-19 11:56:48,719][mesure_simple_nn][INFO]Similarité attendue: 100000.0€, Similarité donnée par le modèle: 8879.1298828125€, Erreur: 91120.8701171875€
+[2024-10-19 11:56:48,719][mesure_simple_nn][INFO]Requête: [4, 56, 4, 0, 0, 0, 0, 0, 1, 4]
+[2024-10-19 11:56:48,719][mesure_simple_nn][INFO]Similarité attendue: 160000.0€, Similarité donnée par le modèle: 9522.2099609375€, Erreur: 150477.7900390625€
+[2024-10-19 11:56:48,719][mesure_simple_nn][INFO]Requête: [2, 48, 2, 0, 0, 1, 1, 5, 1, 2]
+[2024-10-19 11:56:48,719][mesure_simple_nn][INFO]Similarité attendue: 160000.0€, Similarité donnée par le modèle: 8683.5908203125€, Erreur: 151316.4091796875€
+[2024-10-19 11:56:48,719][mesure_simple_nn][INFO]Requête: [3, 70, 3, 2, 0, 0, 0, 3, 1, 1]
+[2024-10-19 11:56:48,719][mesure_simple_nn][INFO]Similarité attendue: 220000.0€, Similarité donnée par le modèle: 7383.74365234375€, Erreur: 212616.25634765625€
+[2024-10-19 11:56:48,719][mesure_simple_nn][INFO]Nombre de prédictions correctes: 0/10
+[2024-10-19 11:56:48,719][mesure_simple_nn][INFO]Précision moyenne du modèle sur le jeu de test: -15435595.74%
+INFO:     127.0.0.1:43684 - "POST /test HTTP/1.1" 200 OK
+
+*app\usecases\simple_nn\create_model_simple_nn.py*
+from app.repositories.memory import model_exists, save_model
+from fastapi import HTTPException  # type: ignore
+from typing import List
+from app.services.logger import logger
+
+def create_model_simpleNN(name: str, neural_network_type="SimpleNN"):
+    logger.info(f"Type de machine learning utilisé pour la création du model {neural_network_type}")
+
+    if model_exists(name):
+        raise HTTPException(status_code=400, detail="Model already exists")
+
+    # Enregistrer le modèle avec le glossaire et le dictionnaire d'indices
+    model_data = {
+        "neural_network_type": neural_network_type # Enregistrement du type de modèle
+    }
+    save_model(name, model_data)
+
+    return {"status": "model created", "model_name": name}
+
+*app\usecases\simple_nn\train_model_simple_nn.py*
+from app.apis.models.simple_nn_training_data import SimpleNNTrainingData
+from app.commons.commons import create_glossary_from_training_data
+from app.machine_learning.neural_network_siamese import train_siamese_model_nn
+from app.repositories.memory import get_model, update_model
+from app.machine_learning.neural_network_simple import train_model_nn
+from app.machine_learning.neural_network_lstm import train_lstm_model_nn
+from app.usecases.tokens_to_indices import tokens_to_indices
+from fastapi import HTTPException  # type: ignore
+from typing import List, Tuple
+from app.services.logger import logger
+
+# Fonction pour transformer SimpleNNTrainingData en Tuple[List[int], int]
+def transform_data(training_data: List[SimpleNNTrainingData]) -> List[Tuple[List[int], int]]:
+    transformed_data = []
+    
+    for data in training_data:
+        # On transforme les attributs en une liste d'entiers sauf le prix
+        input_data = [
+            data.type,
+            data.surface,
+            data.pieces,
+            data.floor,
+            data.parking,
+            data.balcon,
+            data.ascenseur,
+            data.orientation,
+            data.transports,
+            data.neighborhood
+        ]
+        
+        # Le prix est la cible, sous forme de float
+        target_price = float(data.price)
+        
+        # On ajoute le tuple (input_data, target_price) à la liste transformée
+        transformed_data.append((input_data, target_price))
+    
+    return transformed_data
+
+def train_model_simple_nn(name: str, training_data: List[SimpleNNTrainingData]):
+    """
+    Entraîne le modèle avec des paires (input, target).
+    :param name: Nom du modèle
+    :param training_data: Liste de tuples (input, target) où input et target sont des listes de tokens
+    """
+
+    model = get_model(name)
+
+    if model is None or not model:
+        raise HTTPException(status_code=404, detail="Model not found")
+    
+    if training_data is None:
+        raise HTTPException(status_code=400, detail="No training data provided")
+    
+    if len(training_data) == 0:
+        raise HTTPException(status_code=400, detail="Training data is empty")
+    
+    # Vérifier le type de modèle à utiliser
+    neural_network_type = model.get("neural_network_type", "SimpleNN")  # Par défaut SimpleNN si non spécifié
+    logger.info(f"Type de machine learning utilisé pour l'entrainement {neural_network_type}")
+    
+    transformed_data = transform_data(training_data)
+
+    # Récupérer la taille des tableaux dans les tuples
+    vector_size = len(transformed_data[0][0])
+
+    # Entraîner le réseau de neurones en fonction du type de modèle
+    nn_model, _ = train_model_nn(transformed_data, vector_size)
+
+    # Enregistrer le modèle de réseau de neurones entraîné
+    update_model(name, {"nn_model": nn_model})
+
+    return {"status": "training completed", "model_name": name}
+
+*app\usecases\simple_nn\search_model_simple_nn.py*
+from app.apis.models.simple_nn_search_data import SimpleNNSearchData
+from app.repositories.memory import get_model
+from app.machine_learning.neural_network_simple import predict
+from app.services.logger import logger
+from fastapi import HTTPException # type: ignore
+import torch
+
+def search_model_simple_nn(name: str, search: SimpleNNSearchData):
+    model = get_model(name)
+    if not model:
+        raise HTTPException(status_code=404, detail="Model not found")
+
+    nn_model = model.get("nn_model", None)
+    if not nn_model:
+        raise HTTPException(status_code=400, detail="No neural network model found in the model")
+
+    transformed_data = [
+        search.type,
+        search.surface,
+        search.pieces,
+        search.floor,
+        search.parking,
+        search.balcon,
+        search.ascenseur,
+        search.orientation,
+        search.transports,
+        search.neighborhood
+    ]
+
+    # Récupérer le type de modèle (par défaut SimpleNN)
+    neural_network_type = model.get("neural_network_type", "SimpleNN")
+
+    logger.info(f"Type de machine learning utilisé pour la recherche {neural_network_type}")
+
+    # Utiliser le réseau de neurones SimpleNN pour prédire le vecteur le plus proche
+    predicted = predict(nn_model, transformed_data)
+
+    return {
+        "search": search,
+        "find": predicted
+    }
+
+*app\usecases\simple_nn\mesure_simple_nn.py*
+from app.machine_learning.neural_network_simple import predict
+from app.repositories.memory import get_model
+from app.services.logger import logger
+
+def mesure_simple_nn(name, test_data):
+    try:
+        total_error = 0
+        correct_predictions = 0
+        total_tests = len(test_data)
+        model = get_model(name)
+        nn_model = model.get("nn_model", None)
+
+        transformed_data = []
+            
+        for data in test_data:
+            # On transforme les attributs en une liste d'entiers sauf le prix
+            input_data = [
+                data.type,
+                data.surface,
+                data.pieces,
+                data.floor,
+                data.parking,
+                data.balcon,
+                data.ascenseur,
+                data.orientation,
+                data.transports,
+                data.neighborhood
+            ]
+            
+            # On ajoute le tuple (input_data, target_price) à la liste transformée
+            transformed_data.append((input_data, data.price))
+
+        for input, expected in transformed_data:
+            # Utiliser le réseau de neurones SimpleNN pour prédire le vecteur le plus proche
+            predicted = predict(nn_model, input)
+            error = abs(predicted - expected)
+            total_error += error
+            # Considérer la prédiction correcte si la différence est inférieure à un seuil (par exemple 0.1)
+            if error <= 0.1:
+                correct_predictions += 1
+            # Utiliser le logger pour les sorties
+            logger.info(f"Requête: {input}")
+            logger.info(f"Similarité attendue: {expected}€, Similarité donnée par le modèle: {predicted}€, Erreur: {error}€")
+        avg_error = total_error / total_tests
+        # Exprimer avg_error en pourcentage de précision
+        precision_percentage = (1 - avg_error) * 100  # Plus avg_error est faible, plus la précision est élevée
+        # Afficher le nombre de prédictions correctes sur le nombre total d'essais
+        logger.info(f"Nombre de prédictions correctes: {correct_predictions}/{total_tests}")
+        logger.info(f"Précision moyenne du modèle sur le jeu de test: {precision_percentage:.2f}%")
+    except Exception as e:
+        # Gestion des erreurs générales
+        logger.error(f"Une erreur s'est produite pendant test_siamese : {str(e)}")
+        raise Exception(f"Une erreur s'est produite pendant test_siamese : {str(e)}")
+
+*app\machine_learning\neural_network_simple.py*
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import time
+from app.services.logger import logger
+import numpy as np
+
+# Fonction pour normaliser les données entre 0 et 1 (Min-Max scaling)
+def min_max_normalize(data):
+    data = np.array(data, dtype=np.float32)
+    min_val = np.min(data, axis=0)  # Minimum pour chaque caractéristique
+    max_val = np.max(data, axis=0)  # Maximum pour chaque caractéristique
+    # Éviter la division par zéro si min == max
+    return (data - min_val) / (max_val - min_val + 1e-8)  # Ajout d'un petit terme pour éviter la division par 0
+
+# Définition du réseau de neurones SimpleNN amélioré avec plusieurs couches et du Dropout pour la régularisation
+class SimpleNN(nn.Module):
+    def __init__(self, input_size, hidden_size, output_size):
+        """
+        Initialisation du réseau SimpleNN avec :
+        - input_size : taille du vecteur d'entrée
+        - hidden_size : nombre de neurones dans la couche cachée
+        - output_size : taille du vecteur de sortie
+        """
+        super(SimpleNN, self).__init__()
+        # Première couche fully connected
+        self.fc1 = nn.Linear(input_size, hidden_size)
+        # Fonction d'activation ReLU après la première couche
+        self.relu1 = nn.ReLU()
+        # Deuxième couche fully connected pour ajouter de la profondeur au réseau
+        self.fc2 = nn.Linear(hidden_size, hidden_size)
+        # Fonction d'activation ReLU après la deuxième couche
+        self.relu2 = nn.ReLU()
+        # Troisième couche fully connected (couche de sortie)
+        self.fc3 = nn.Linear(hidden_size, output_size)
+        # Dropout pour réduire le surapprentissage (50% des neurones désactivés aléatoirement)
+        self.dropout = nn.Dropout(p=0.5)
+
+    def forward(self, x):
+        """
+        Fonction de passage avant (forward) :
+        - Prend un vecteur d'entrée x et le passe à travers les couches du réseau.
+        - Applique des fonctions d'activation ReLU et un Dropout pour la régularisation.
+        """
+        out = self.fc1(x)
+        out = self.relu1(out)
+        out = self.dropout(out)  # Applique Dropout après la première couche cachée
+        out = self.fc2(out)
+        out = self.relu2(out)
+        out = self.fc3(out)  # Pas de fonction d'activation après la dernière couche
+        return out
+
+# Définition de la fonction de perte hybride combinant MSE (Mean Squared Error) et Cosine Similarity
+class HybridLoss(nn.Module):
+    def __init__(self):
+        """
+        Initialisation de la fonction de perte hybride :
+        - Combine la perte MSE (pour la différence en magnitude) et
+        - la similarité cosinus (pour la différence en direction).
+        """
+        super(HybridLoss, self).__init__()
+        self.mse_loss = nn.MSELoss()
+
+    def forward(self, output, target):
+        """
+        Calcul de la perte hybride :
+        - Calcule d'abord la similarité cosinus entre output et target.
+        - Calcule ensuite la perte MSE.
+        - Combine les deux avec un poids de 0.5 pour chacun.
+        """
+        # Calcul de la similarité cosinus entre output et target
+        cos_sim = nn.functional.cosine_similarity(output, target, dim=0)
+        # Calcul de la perte MSE
+        mse_loss = self.mse_loss(output, target)
+        # Combinaison : 50% MSE et 50% (1 - similarité cosinus)
+        return 0.5 * mse_loss + 0.5 * (1 - cos_sim.mean())  # Moyenne pour obtenir un scalaire
+
+# Fonction pour entraîner le modèle SimpleNN avec Early Stopping
+def train_model_nn(train_data, vector_size, epochs=3000, learning_rate=0.001, patience=10, improvement_threshold=0.00001):
+    """
+    Fonction d'entraînement du modèle SimpleNN :
+    - Prend les données d'entraînement, la taille du vecteur, le nombre d'époques et le taux d'apprentissage.
+    - Utilise une stratégie d'arrêt anticipé (Early Stopping) pour arrêter l'entraînement si la perte n'améliore plus.
+    - Retourne le modèle entraîné et les pertes sur chaque époque.
+    """
+    try:
+        # Initialisation des tailles
+        input_size = vector_size  # Taille des vecteurs d'entrée
+        hidden_size = 128  # Taille des couches cachées
+        output_size = 1  # La taille de sortie doit être 1 (pour prédire un prix unique)
+
+        # Création du modèle SimpleNN
+        model = SimpleNN(input_size, hidden_size, output_size)
+
+        # Utilisation de la fonction de perte hybride
+        criterion = HybridLoss()
+        # Optimiseur Adam avec un taux d'apprentissage initial
+        optimizer = optim.Adam(model.parameters(), lr=learning_rate)
+
+        logger.debug(f"train_data {train_data}")
+
+        # Séparation des features (inputs) et des targets (prix)
+        features = np.array([x[0] for x in train_data], dtype=np.float32)  # Entrées
+        targets = np.array([x[1] for x in train_data], dtype=np.float32)  # Cibles (prix)
+
+        # Normalisation des features (input data)
+        features_normalized = min_max_normalize(features)
+
+        # Conversion en tenseurs
+        inputs_tensor = torch.tensor(features_normalized, dtype=torch.float32)  # Les entrées sous forme de tenseurs
+        targets_tensor = torch.tensor(targets, dtype=torch.float32).unsqueeze(1)  # Cibles, avec une dimension ajoutée
+
+        # Liste pour stocker la perte à chaque époque
+        losses = []
+        start_time = time.time()
+
+        best_loss = float('inf')  # Initialisation de la meilleure perte à une grande valeur
+        epochs_without_improvement = 0  # Compteur pour l'arrêt anticipé
+
+        # Boucle d'entraînement
+        for epoch in range(epochs):
+            optimizer.zero_grad()  # Réinitialiser les gradients
+            outputs = model(inputs_tensor)  # Passer les entrées dans le modèle
+            loss = criterion(outputs, targets_tensor)  # Calculer la perte
+            loss.backward()  # Calculer les gradients
+            optimizer.step()  # Mettre à jour les poids
+
+            current_loss = loss.item()  # Récupérer la perte actuelle
+            losses.append(current_loss)
+
+            # Afficher la perte toutes les 10 époques
+            if (epoch + 1) % 10 == 0:
+                logger.debug(f"Époque {epoch + 1}/{epochs}, Perte: {current_loss}")
+
+            # Vérification de l'amélioration de la perte
+            if current_loss < best_loss - improvement_threshold:
+                best_loss = current_loss
+                epochs_without_improvement = 0  # Réinitialiser si la perte s'améliore
+            else:
+                epochs_without_improvement += 1  # Incrémenter si aucune amélioration
+
+            # Arrêter l'entraînement si la perte n'améliore plus
+            if epochs_without_improvement >= patience:
+                logger.info(f"Arrêt anticipé à l'époque {epoch + 1}. Perte optimale atteinte : {best_loss:.6f}")
+                break
+
+    except RuntimeError as e:
+        raise RuntimeError(f"Erreur lors de l'entraînement du modèle : {str(e)}") from e
+    except Exception as e:
+        raise RuntimeError(f"Erreur inattendue lors de l'entraînement : {str(e)}") from e
+
+    # Calcul du temps total d'entraînement
+    total_training_time = time.time() - start_time
+    total_parameters = sum(p.numel() for p in model.parameters())
+
+    # Statistiques sur les pertes
+    avg_loss = sum(losses) / len(losses)
+    min_loss = min(losses)
+    max_loss = max(losses)
+
+    # Log des statistiques d'entraînement
+    logger.info(f"Temps total d'entraînement: {total_training_time:.2f} secondes")
+    logger.info(f"Nombre total de paramètres: {total_parameters}")
+    logger.info(f"Perte moyenne: {avg_loss}")
+    logger.info(f"Perte minimale: {min_loss}")
+    logger.info(f"Perte maximale: {max_loss}")
+    logger.info(f"Perte finale après {len(losses)} epochs : {losses[-1]}")
+
+    return model, losses
+
+# Fonction pour faire une prédiction avec le modèle SimpleNN
+def predict(model, input_vector):
+    """
+    Fonction de prédiction avec normalisation des entrées.
+    """
+    try:
+        # Conversion de l'input en un numpy array et normalisation
+        input_array = np.array(input_vector, dtype=np.float32).reshape(1, -1)  # Ajouter une dimension batch
+        input_array_normalized = min_max_normalize(input_array)  # Normalisation des données
+
+        # Passer les données normalisées à travers le modèle
+        with torch.no_grad():  # Désactiver le calcul des gradients pour la prédiction
+            output_tensor = model(torch.tensor(input_array_normalized))
+
+        # Conversion du tenseur de sortie en une valeur Python standard (target_price)
+        predicted_price = output_tensor.detach().cpu().numpy().squeeze()
+
+        # Vérification que la sortie est bien un scalaire
+        if predicted_price.size == 1:
+            return float(predicted_price)  # Retourne la valeur prédite comme un float
+        else:
+            raise ValueError("La sortie du modèle n'est pas une valeur scalaire unique")
+    
+    except Exception as e:
+        logger.error(f"Erreur lors de la prédiction : {e}")
+        raise
